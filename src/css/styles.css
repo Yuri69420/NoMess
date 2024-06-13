@@ -1,0 +1,161 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f0f0f0;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar li {
+    float: left;
+}
+
+.navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar li a:hover {
+    background-color: #111;
+}
+
+section {
+    padding: 2rem;
+    background: #fff;
+    margin: 1rem auto;
+    max-width: 800px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin: 0.5rem 0 0.2rem;
+}
+
+form input, form textarea, form button {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    background: #333;
+    color: #fff;
+    cursor: pointer;
+}
+
+form button:hover {
+    background: #555;
+}
+
+.countdown-container {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.countdown-item {
+    display: inline-block;
+    margin: 0 1rem;
+}
+
+.countdown-value {
+    font-size: 2rem;
+    color: #333;
+}
+
+.countdown-label {
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.gallery img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+    }
+}
+.colorBackground {
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(
+        at 71% 77%,
+        var(--color-gradient-1) 0,
+        transparent 21%
+      ),
+      radial-gradient(at 36% 47%, var(--color-gradient-3) 0, transparent 50%),
+      radial-gradient(at 54% 29%, var(--color-gradient-3) 0, transparent 28%),
+      radial-gradient(at 45% 51%, var(--color-gradient-1) 0, transparent 53%),
+      radial-gradient(at 73% 44%, var(--color-gradient-2) 0, transparent 54%),
+      radial-gradient(at 24% 7%, var(--color-gradient-2) 0, transparent 40%),
+      radial-gradient(at 76% 46%, var(--color-gradient-1) 0, transparent 50%);
+    /* mix-blend-mode: normal; */
+    max-height: 800px;
+    height: 80vh;
+    max-width: 1400px;
+    width: 70vw;
+    width: 100%;
+    filter: blur(44px);
+    z-index: -1;
+  }
+  
+  .colorBackgroundBottom {
+    left: 50%;
+    transform: translateX(-50%) rotate(190deg);
+    background: radial-gradient(
+        at 83% 25%,
+        var(--color-gradient-1) 0,
+        transparent 21%
+      ),
+      radial-gradient(at 36% 47%, var(--color-gradient-3) 0, transparent 50%),
+      radial-gradient(at 79% 45%, var(--color-gradient-3) 0, transparent 28%),
+      radial-gradient(at 66% 38%, var(--color-gradient-1) 0, transparent 53%),
+      radial-gradient(at 89% 13%, var(--color-gradient-2) 0, transparent 54%),
+      radial-gradient(at 24% 7%, var(--color-gradient-2) 0, transparent 40%),
+      radial-gradient(at 76% 46%, var(--color-gradient-1) 0, transparent 50%);
+    /* mix-blend-mode: normal; */
+    height: 600px;
+    max-width: 900px;
+    width: 55vw;
+    width: 100%;
+    filter: blur(44px);
+    z-index: -1;
+  }
+  
