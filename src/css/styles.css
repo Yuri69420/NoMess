@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background: #f0f0f0;
@@ -9,7 +9,7 @@ body {
 header, footer {
     background: linear-gradient(45deg, #2b248f, #b700ff);
     color: #fff;
-    padding: 1rem 0;
+    padding: 1.5rem 0;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -32,9 +32,10 @@ header, footer {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 16px 20px;
     text-decoration: none;
     transition: background-color 0.3s;
+    font-weight: 700;
 }
 
 .navbar li a:hover {
@@ -43,20 +44,36 @@ header, footer {
 
 header img {
     display: block;
-    margin: 0 auto;
-    max-width: 200px;
+    margin: 1rem auto;
+    max-width: 150px;
 }
 
 section {
-    padding: 2rem;
+    padding: 2.5rem;
     background: #fff;
-    margin: 1rem auto;
+    margin: 1.5rem auto;
     max-width: 800px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1, h2 {
     color: #333;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+p {
+    line-height: 1.6;
+    font-size: 1rem;
 }
 
 form {
@@ -69,7 +86,7 @@ form label {
 }
 
 form input, form textarea, form button {
-    padding: 0.5rem;
+    padding: 0.75rem;
     margin-bottom: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -84,13 +101,13 @@ form button {
 }
 
 form button:hover {
-    background: linear-gradient(45deg, #2b248f, #b700ff);
+    background: linear-gradient(45deg, #2b248f, #9f00ff);
 }
 
 .countdown-container {
     text-align: center;
-    margin: 2rem auto;
-    padding: 2rem;
+    margin: 2.5rem auto;
+    padding: 2.5rem;
     border: 2px solid #333;
     max-width: 600px;
     background: #fff;
@@ -99,23 +116,24 @@ form button:hover {
 
 .countdown-item {
     display: inline-block;
-    margin: 0 1rem;
+    margin: 0 1.5rem;
 }
 
 .countdown-value {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: #333;
 }
 
 .countdown-label {
     display: block;
     margin-top: 0.5rem;
+    font-size: 1rem;
 }
 
 .gallery {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .gallery img {
@@ -135,15 +153,15 @@ form button:hover {
         flex-direction: column;
     }
 }
+
 #videoContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
+    padding: 1.5rem;
 }
 
 #videoContainer video {
     max-width: 100%;
     height: auto;
 }
-

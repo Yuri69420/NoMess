@@ -1,0 +1,28 @@
+{
+  "name": "wakewebsite",
+  "version": "0.0.1",
+  "description": "beta version of the wake website",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yuri69420/NoMess.git"
+  },
+  "keywords": [
+    "website"
+  ],
+  "author": "Yuri42069-Abderrahmane",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yuri69420/NoMess/issues"
+  },
+  "homepage": "https://github.com/Yuri69420/NoMess#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13"
+  }
+}
