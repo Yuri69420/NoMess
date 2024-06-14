@@ -45,7 +45,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Routes
-app.post('/src/pages/thankyou.html', (req, res) => {
+app.post('/thankyou.html', (req, res) => {
     console.log('Received registration data:', req.body);
 
     const registration = new Registration(req.body);
