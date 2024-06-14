@@ -1,19 +1,23 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const app = express();
-
-// Connect to MongoDB
-mongoose.connect('mongodb+srv://abderrahmaneerra:I23ESJSIORoxcTzU@wake.d7pbojk.mongodb.net/?retryWrites=true&w=majority&appName=Wake', { useNewUrlParser: true, useUnifiedTopology: true });
-
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-    console.log('Connected to MongoDB');
-});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Connect to MongoDB using the environment variable
+const mongoURI = process.env.MONGODB_URI || 'your-default-mongodb-uri-here';
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const db = mongoose.connection;
+db.on('error', (err) => {
+    console.error('Connection error:', err);
+});
+db.once('open', () => {
+    console.log('Connected to MongoDB');
+});
 
 // Define a schema and model for registrations
 const registrationSchema = new mongoose.Schema({
@@ -25,6 +29,7 @@ const registrationSchema = new mongoose.Schema({
 
 const Registration = mongoose.model('Registration', registrationSchema);
 
+// Routes
 app.post('/register', (req, res) => {
     const registration = new Registration(req.body);
     registration.save((err, registration) => {
@@ -34,10 +39,12 @@ app.post('/register', (req, res) => {
 });
 
 app.post('/contact', (req, res) => {
-    // Handle contact form data here
     console.log(req.body);
     res.json({ message: 'Message sent' });
 });
+
+// Serve static files from the public directory
+app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
