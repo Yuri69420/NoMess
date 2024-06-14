@@ -33,4 +33,25 @@ document.addEventListener("DOMContentLoaded", function() {
     };
    
 });
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+
+    fetch('/register', {
+        method: 'POST',
+        body: JSON.stringify(Object.fromEntries(formData)),
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('formMessage').textContent = 'Registration successful!';
+    })
+    .catch(error => {
+        document.getElementById('formMessage').textContent = 'Registration failed. Please try again.';
+    });
+});
+
 
