@@ -45,8 +45,8 @@ const Registration = mongoose.model('Registration', registrationSchema);
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.EMAIL_USER, // Use environment variables for security
-        pass: process.env.EMAIL_PASS  // Use environment variables for security
+        user: 'y1568248@gmail.com', // Use environment variables for security
+        pass: '@zertyabde420'  // Use environment variables for security
     }
 });
 
