@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Serve the thank you page
-app.get('/thankyou', (req, res) => {
+app.get('/thankyou.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'src', 'pages', 'thankyou.html'));
 });
 
@@ -52,8 +52,8 @@ app.post('/register', (req, res) => {
         }
         console.log('Registration successful:', registration);
 
-        // Send a response to the client
-        res.status(200).json({ message: 'Registration successful' });
+        // Redirect to thankyou.html on success
+        res.redirect('/thankyou.html');
     });
 });
 
