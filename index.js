@@ -35,7 +35,7 @@ const registrationSchema = new mongoose.Schema({
 const Registration = mongoose.model('Registration', registrationSchema);
 
 // Routes
-//app.post('/register', (req, res) => {
+app.post('', (req, res) => {
     console.log('Received registration data:', req.body);
 
     const registration = new Registration(req.body);
@@ -47,7 +47,7 @@ const Registration = mongoose.model('Registration', registrationSchema);
         console.log('Registration successful:', registration);
         return res.status(200).json({ message: 'Registration successful', registration });
     });
-//});
+});
 
 app.post('/contact', (req, res) => {
     console.log('Received contact data:', req.body);
