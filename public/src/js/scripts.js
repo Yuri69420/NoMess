@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify({ name, email, phoneNumber, nationality }),
             })
@@ -73,56 +74,14 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('formMessage').textContent = message;
     });
 
-    document.getElementById('contactForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        var name = document.getElementById('contactName').value;
-        var email = document.getElementById('contactEmail').value;
-        var messageContent = document.getElementById('message').value;
-        var message = '';
-
-        if (name === '' || email === '' || messageContent === '') {
-            message = 'All fields are required.';
-        } else if (!/\S+@\S+\.\S+/.test(email)) {
-            message = 'Please enter a valid email address.';
-        } else {
-            // Show loading indicator
-            document.getElementById('contactFormMessage').textContent = 'Sending message...';
-
-            fetch('/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, email, messageContent }),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                document.getElementById('contactFormMessage').textContent = 'Message sent successfully!';
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                document.getElementById('contactFormMessage').textContent = 'Error sending message.';
-            });
-
-            return; // Exit the function to prevent showing 'Message sent successfully!' prematurely
-        }
-
-        document.getElementById('contactFormMessage').textContent = message;
-    });
+    function validatePhoneNumber(phoneNumber) {
+        var phoneRegex = /^\+?[1-9]\d{1,14}$/; // International format
+        return phoneRegex.test(phoneNumber);
+    }
 
     // Video Loading Indicator Script
     function hideLoadingIndicator() {
         document.getElementById('videoContainer').innerHTML = '';
-    }
-    
-    function validatePhoneNumber(phoneNumber) {
-        var phoneRegex = /^\+?[1-9]\d{1,14}$/; // International format
-        return phoneRegex.test(phoneNumber);
     }
 
     document.querySelector('video').addEventListener('loadeddata', hideLoadingIndicator);
