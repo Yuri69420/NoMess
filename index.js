@@ -34,15 +34,21 @@ const Registration = mongoose.model('Registration', registrationSchema);
 
 // Routes
 app.post('/register', (req, res) => {
+    console.log('Received registration data:', req.body);
+
     const registration = new Registration(req.body);
     registration.save((err, registration) => {
-        if (err) return res.status(500).json({ message: 'Registration failed', error: err });
+        if (err) {
+            console.error('Error saving registration:', err);
+            return res.status(500).json({ message: 'Registration failed', error: err });
+        }
+        console.log('Registration successful:', registration);
         return res.status(200).json({ message: 'Registration successful', registration });
     });
 });
 
 app.post('/contact', (req, res) => {
-    console.log(req.body);
+    console.log('Received contact data:', req.body);
     res.json({ message: 'Message sent' });
 });
 

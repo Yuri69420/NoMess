@@ -28,30 +28,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
     function hideLoadingIndicator() {
         document.getElementById('videoContainer').innerHTML = '';
-    };
-   
-});
-document.getElementById('registrationForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const formData = new FormData(this);
+    }
 
-    fetch('/register', {
-        method: 'POST',
-        body: JSON.stringify(Object.fromEntries(formData)),
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('formMessage').textContent = 'Registration successful!';
-    })
-    .catch(error => {
-        document.getElementById('formMessage').textContent = 'Registration failed. Please try again.';
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+
+        fetch('/register', {
+            method: 'POST',
+            body: JSON.stringify(Object.fromEntries(formData)),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('formMessage').textContent = 'Registration successful!';
+        })
+        .catch(error => {
+            console.error('Error during registration:', error);
+            document.getElementById('formMessage').textContent = 'Registration failed. Please try again.';
+        });
     });
 });
-
-
