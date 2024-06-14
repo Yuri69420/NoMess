@@ -29,34 +29,101 @@ document.addEventListener("DOMContentLoaded", function() {
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
+    // Form Validation and Submission Script
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var phoneNumber = document.getElementById('phoneNumber').value;
+        var nationality = document.getElementById('nationality').value;
+        var message = '';
+
+        if (name === '' || email === '' || phoneNumber === '' || nationality === '') {
+            message = 'All fields are required.';
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
+            message = 'Please enter a valid email address.';
+        } else if (!validatePhoneNumber(phoneNumber)) {
+            message = 'Please enter a valid phone number.';
+        } else {
+            document.getElementById('formMessage').textContent = 'Submitting...';
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, phoneNumber, nationality }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('formMessage').textContent = 'Registration successful!';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('formMessage').textContent = 'Registration failed. Please try again.';
+            });
+
+            return; // Exit the function to prevent showing 'Registration successful!' prematurely
+        }
+
+        document.getElementById('formMessage').textContent = message;
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var name = document.getElementById('contactName').value;
+        var email = document.getElementById('contactEmail').value;
+        var messageContent = document.getElementById('message').value;
+        var message = '';
+
+        if (name === '' || email === '' || messageContent === '') {
+            message = 'All fields are required.';
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
+            message = 'Please enter a valid email address.';
+        } else {
+            // Show loading indicator
+            document.getElementById('contactFormMessage').textContent = 'Sending message...';
+
+            fetch('/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, messageContent }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('contactFormMessage').textContent = 'Message sent successfully!';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('contactFormMessage').textContent = 'Error sending message.';
+            });
+
+            return; // Exit the function to prevent showing 'Message sent successfully!' prematurely
+        }
+
+        document.getElementById('contactFormMessage').textContent = message;
+    });
+
+    // Video Loading Indicator Script
     function hideLoadingIndicator() {
         document.getElementById('videoContainer').innerHTML = '';
     }
+    
+    function validatePhoneNumber(phoneNumber) {
+        var phoneRegex = /^\+?[1-9]\d{1,14}$/; // International format
+        return phoneRegex.test(phoneNumber);
+    }
 
-    document.getElementById('registrationForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const formData = new FormData(this);
-
-        fetch('/register', {
-            method: 'POST',
-            body: JSON.stringify(Object.fromEntries(formData)),
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            document.getElementById('formMessage').textContent = 'Registration successful!';
-        })
-        .catch(error => {
-            console.error('Error during registration:', error);
-            document.getElementById('formMessage').textContent = 'Registration failed. Please try again.';
-        });
-    });
+    document.querySelector('video').addEventListener('loadeddata', hideLoadingIndicator);
 });
