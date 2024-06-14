@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
             message = 'Please enter a valid phone number.';
         } else {
             document.getElementById('formMessage').textContent = 'Submitting...';
-            fetch('/thankyou.html', {
+            fetch('/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 return response.json();
             })
             .then(data => {
-                document.getElementById('formMessage').textContent = 'Registration successful!';
+                window.location.href = '/thankyou'; // Redirect to thankyou.html on success
             })
             .catch((error) => {
                 console.error('Error:', error);

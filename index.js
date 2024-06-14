@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 const app = express();
 
@@ -10,6 +11,11 @@ app.use(bodyParser.json());
 
 // Serve static files from the public directory
 app.use(express.static('public'));
+
+// Serve the thank you page
+app.get('/thankyou', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'src/pages/thankyou.html'));
+});
 
 // Connect to MongoDB using the environment variable
 const mongoURI = process.env.MONGODB_URI || 'your-default-mongodb-uri-here';
@@ -45,7 +51,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Routes
-app.post('/thankyou.html', (req, res) => {
+app.post('/register', (req, res) => {
     console.log('Received registration data:', req.body);
 
     const registration = new Registration(req.body);
@@ -55,7 +61,7 @@ app.post('/thankyou.html', (req, res) => {
             return res.status(500).json({ message: 'Registration failed', error: err });
         }
         console.log('Registration successful:', registration);
-
+/*
         // Send confirmation email
         const mailOptions = {
             from: process.env.EMAIL_USER, // Use environment variables for security
@@ -65,6 +71,7 @@ app.post('/thankyou.html', (req, res) => {
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
+            */
             if (error) {
                 console.error('Error sending email:', error);
                 return res.status(500).json({ message: 'Registration successful, but email failed', error });
@@ -73,7 +80,7 @@ app.post('/thankyou.html', (req, res) => {
             return res.status(200).json({ message: 'Registration successful', registration });
         });
     });
-});
+//});
 
 app.post('/contact', (req, res) => {
     console.log('Received contact data:', req.body);
