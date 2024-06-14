@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 return response.json();
             })
             .then(data => {
-                window.location.href = '/src/pages/thankyou.html'; // Redirect to thankyou.html on success
+                window.location.href = '/thankyou'; // Redirect to thankyou.html on success
             })
             .catch((error) => {
                 console.error('Error:', error);
