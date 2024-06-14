@@ -71,7 +71,6 @@ app.post('/register', (req, res) => {
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
-            */
             if (error) {
                 console.error('Error sending email:', error);
                 return res.status(500).json({ message: 'Registration successful, but email failed', error });
@@ -79,8 +78,10 @@ app.post('/register', (req, res) => {
             console.log('Email sent: ' + info.response);
             return res.status(200).json({ message: 'Registration successful', registration });
         });
+        */
     });
-//});
+    
+});
 
 app.post('/contact', (req, res) => {
     console.log('Received contact data:', req.body);
