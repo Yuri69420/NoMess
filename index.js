@@ -45,8 +45,8 @@ const Registration = mongoose.model('Registration', registrationSchema);
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'y1568248@gmail.com', // Use environment variables for security
-        pass: '@zertyabde420'  // Use environment variables for security
+        user: process.env.EMAIL_USER, // Use environment variables for security
+        pass: process.env.EMAIL_PASS  // Use environment variables for security
     }
 });
 
@@ -61,7 +61,7 @@ app.post('/register', (req, res) => {
             return res.status(500).json({ message: 'Registration failed', error: err });
         }
         console.log('Registration successful:', registration);
-
+/*
         // Send confirmation email
         const mailOptions = {
             from: process.env.EMAIL_USER, // Use environment variables for security
@@ -78,6 +78,7 @@ app.post('/register', (req, res) => {
             console.log('Email sent: ' + info.response);
             res.status(200).json({ message: 'Registration successful' });
         });
+        */
     });
 });
 
