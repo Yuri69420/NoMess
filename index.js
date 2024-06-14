@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
 const path = require('path');
 
 const app = express();
@@ -41,15 +40,6 @@ const registrationSchema = new mongoose.Schema({
 
 const Registration = mongoose.model('Registration', registrationSchema);
 
-// Configure Nodemailer
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER, // Use environment variables for security
-        pass: process.env.EMAIL_PASS  // Use environment variables for security
-    }
-});
-
 // Routes
 app.post('/register', (req, res) => {
     console.log('Received registration data:', req.body);
@@ -61,24 +51,9 @@ app.post('/register', (req, res) => {
             return res.status(500).json({ message: 'Registration failed', error: err });
         }
         console.log('Registration successful:', registration);
-/*
-        // Send confirmation email
-        const mailOptions = {
-            from: process.env.EMAIL_USER, // Use environment variables for security
-            to: registration.email,
-            subject: 'Registration Successful',
-            text: `Dear ${registration.name},\n\nThank you for registering. Your registration was successful!\n\nBest regards,\nEvent Team`
-        };
 
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.error('Error sending email:', error);
-                return res.status(500).json({ message: 'Registration successful, but email failed', error });
-            }
-            console.log('Email sent: ' + info.response);
-            res.status(200).json({ message: 'Registration successful' });
-        });
-        */
+        // Send a response to the client
+        res.status(200).json({ message: 'Registration successful' });
     });
 });
 
