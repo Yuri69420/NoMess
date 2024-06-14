@@ -12,7 +12,9 @@ app.use(express.static('public'));
 
 // Connect to MongoDB using the environment variable
 const mongoURI = process.env.MONGODB_URI || 'your-default-mongodb-uri-here';
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }).catch(err => {
+    console.error('Initial MongoDB connection error:', err);
+});
 
 const db = mongoose.connection;
 db.on('error', (err) => {
