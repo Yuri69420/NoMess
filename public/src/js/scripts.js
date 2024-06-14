@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
             message = 'Please enter a valid phone number.';
         } else {
             document.getElementById('formMessage').textContent = 'Submitting...';
-            fetch('/register', {
+            fetch('/src/pages/thankyou.html', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
