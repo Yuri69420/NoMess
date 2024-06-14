@@ -1,18 +1,13 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-require('dotenv').config();
 
 const app = express();
 
-// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Serve static files from the public directory
-app.use(express.static('public'));
-
-// Connect to MongoDB
+// Connect to MongoDB using the environment variable
 const mongoURI = process.env.MONGODB_URI || 'your-default-mongodb-uri-here';
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -47,6 +42,9 @@ app.post('/contact', (req, res) => {
     console.log(req.body);
     res.json({ message: 'Message sent' });
 });
+
+// Serve static files from the public directory
+app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
