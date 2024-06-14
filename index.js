@@ -1,24 +1,19 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-
 const app = express();
 
-// Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-// Serve static files from the public directory
-app.use(express.static('public'));
-
 // Connect to MongoDB
-mongoose.connect('your-mongodb-connection-string', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://abderrahmaneerra:I23ESJSIORoxcTzU@wake.d7pbojk.mongodb.net/?retryWrites=true&w=majority&appName=Wake', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
     console.log('Connected to MongoDB');
 });
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Define a schema and model for registrations
 const registrationSchema = new mongoose.Schema({
@@ -30,7 +25,6 @@ const registrationSchema = new mongoose.Schema({
 
 const Registration = mongoose.model('Registration', registrationSchema);
 
-// Routes
 app.post('/register', (req, res) => {
     const registration = new Registration(req.body);
     registration.save((err, registration) => {
@@ -45,7 +39,6 @@ app.post('/contact', (req, res) => {
     res.json({ message: 'Message sent' });
 });
 
-// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

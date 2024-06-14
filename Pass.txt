@@ -1,0 +1,5 @@
+cloudMango.db, User database WAKE:
+abderrahmaneerra
+I23ESJSIORoxcTzU
+Connection String :
+mongodb+srv://abderrahmaneerra:I23ESJSIORoxcTzU@wake.d7pbojk.mongodb.net/?retryWrites=true&w=majority&appName=Wake
