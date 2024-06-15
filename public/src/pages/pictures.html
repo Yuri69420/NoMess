@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Gallery</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../../src/css/styles.css">
     <style>
         .active {
             background-color: #007BFF;
@@ -46,7 +46,6 @@
         </div>
         <div id="gallery" class="gallery"></div>
     </section>
-    <script src="../src/js/scripts.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
     <script>
         const API_KEY = 'AIzaSyCDCn6wdwWNjnqx9LuNxAgbTg6iSNEoeeE';
@@ -58,6 +57,7 @@
             party: '1mEFyBfGYAmNBt8uPn72AjfqM-joRK9kH',
             welcoming: '13P6mCfFtKnih4KyU4GQH8S8PYvpDPybw',
         };
+
 
         function loadCategory(category, button) {
             const gallery = document.getElementById('gallery');
@@ -77,6 +77,9 @@
                 } else {
                     document.getElementById('gallery').innerHTML = 'No images found.';
                 }
+            }).catch(error => {
+                console.error('Error loading images:', error);
+                gallery.innerHTML = 'Failed to load images.';
             });
         }
 
@@ -101,6 +104,8 @@
                     scope: 'https://www.googleapis.com/auth/drive.readonly',
                 }).then(function () {
                     loadCategory('sports', document.querySelector('.gallery-categories button')); // Load default category
+                }).catch(error => {
+                    console.error('Error initializing Google API client:', error);
                 });
             });
         }
