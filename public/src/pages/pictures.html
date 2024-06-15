@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Gallery</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .active {
+            background-color: #007BFF;
+            color: white;
+        }
+        .gallery-categories button {
+            margin: 5px;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .gallery-categories button:hover, .gallery-categories button.active {
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -20,17 +36,18 @@
             <img src="../../assets/wake.jpg" alt="logo wake" width="90" height="100"> 
         </h1>
     </header>
-    <section id="gallery">
+    <section id="gallery-section">
         <h1>Event Gallery</h1>
         <p>Pictures and videos from past events.</p>
         <div class="gallery-categories">
-            <button onclick="loadCategory('sports')">Sports</button>
-            <button onclick="loadCategory('party')">Party</button>
-            <button onclick="loadCategory('welcoming')">Welcoming Ceremony</button>
+            <button onclick="loadCategory('sports', this)">Sports</button>
+            <button onclick="loadCategory('party', this)">Party</button>
+            <button onclick="loadCategory('welcoming', this)">Welcoming Ceremony</button>
+            
         </div>
         <div id="gallery" class="gallery"></div>
     </section>
-    <script src="../js/scripts.js"></script>
+    <script src="../src/js/scripts.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
     <script>
         const API_KEY = 'AIzaSyCDCn6wdwWNjnqx9LuNxAgbTg6iSNEoeeE';
@@ -38,13 +55,17 @@
         const FOLDER_ID = '1eh8JG8NFjze-u-pgTV8xRMp0CWkP9ET3';
 
         const categories = {
-            sports: '1tuHQdOUxko6jH3h5Blv5ibqZqwE0vvEI', // Replace with actual folder IDs
-            party: '1mEFyBfGYAmNBt8uPn72AjfqM-joRK9kH',
-            welcoming: '13P6mCfFtKnih4KyU4GQH8S8PYvpDPybw'
+            sports: '1sG0_l0S_c8X7v93DFHLWWy9V4eRjwY76', // Replace with actual folder IDs
+            party: 'your_party_folder_id',
+            welcoming: 'your_welcoming_folder_id',
+          
         };
 
-        function loadCategory(category) {
-            document.getElementById('gallery').innerHTML = 'Loading...';
+        function loadCategory(category, button) {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = 'Loading...';
+            document.querySelectorAll('.gallery-categories button').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
 
             const folderId = categories[category];
 
@@ -81,7 +102,7 @@
                     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
                     scope: 'https://www.googleapis.com/auth/drive.readonly',
                 }).then(function () {
-                    loadCategory('sports'); // Load default category
+                    loadCategory('all', document.querySelector('.gallery-categories button')); // Load default category
                 });
             });
         }
