@@ -86,3 +86,32 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.querySelector('video').addEventListener('loadeddata', hideLoadingIndicator);
 });
+/*
+function loadCategory(category) {
+    document.getElementById('gallery').innerHTML = 'Loading...';
+    
+    gapi.client.drive.files.list({
+        q: `'YOUR_FOLDER_ID' in parents and name contains '${category}' and mimeType contains 'image/'`,
+        fields: 'files(id, name, webContentLink, webViewLink)'
+    }).then(function(response) {
+        const files = response.result.files;
+        if (files && files.length > 0) {
+            displayImages(files);
+        } else {
+            document.getElementById('gallery').innerHTML = 'No images found.';
+        }
+    });
+}
+
+function displayImages(files) {
+    const gallery = document.getElementById('gallery');
+    gallery.innerHTML = '';
+
+    files.forEach(file => {
+        const img = document.createElement('img');
+        img.src = file.webContentLink;
+        img.alt = file.name;
+        gallery.appendChild(img);
+    });
+}
+*/

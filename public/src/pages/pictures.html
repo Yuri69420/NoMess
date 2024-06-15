@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
+    <title>Event Gallery</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
@@ -23,13 +23,71 @@
     <section id="gallery">
         <h1>Event Gallery</h1>
         <p>Pictures and videos from past events.</p>
-        <div class="gallery">
-            <img src="image1.jpg" alt="Event Picture 1">
-            <img src="image2.jpg" alt="Event Picture 2">
-            <img src="image3.jpg" alt="Event Picture 3">
+        <div class="gallery-categories">
+            <button onclick="loadCategory('sports')">Sports</button>
+            <button onclick="loadCategory('party')">Party</button>
+            <button onclick="loadCategory('welcoming')">Welcoming Ceremony</button>
         </div>
+        <div id="gallery" class="gallery"></div>
     </section>
-    <script src="../src/js/scripts.js"></script>
+    <script src="../js/scripts.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        const API_KEY = 'AIzaSyCDCn6wdwWNjnqx9LuNxAgbTg6iSNEoeeE';
+        const CLIENT_ID = '485311177830-chrlo7epl2r5i4je8mqhan9rjnch6n8u.apps.googleusercontent.com';
+        const FOLDER_ID = '1eh8JG8NFjze-u-pgTV8xRMp0CWkP9ET3';
+
+        const categories = {
+            sports: '1tuHQdOUxko6jH3h5Blv5ibqZqwE0vvEI', // Replace with actual folder IDs
+            party: '1mEFyBfGYAmNBt8uPn72AjfqM-joRK9kH',
+            welcoming: '13P6mCfFtKnih4KyU4GQH8S8PYvpDPybw'
+        };
+
+        function loadCategory(category) {
+            document.getElementById('gallery').innerHTML = 'Loading...';
+
+            const folderId = categories[category];
+
+            gapi.client.drive.files.list({
+                q: `'${folderId}' in parents and mimeType contains 'image/'`,
+                fields: 'files(id, name, webContentLink, webViewLink)'
+            }).then(function(response) {
+                const files = response.result.files;
+                if (files && files.length > 0) {
+                    displayImages(files);
+                } else {
+                    document.getElementById('gallery').innerHTML = 'No images found.';
+                }
+            });
+        }
+
+        function displayImages(files) {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '';
+
+            files.forEach(file => {
+                const img = document.createElement('img');
+                img.src = file.webContentLink;
+                img.alt = file.name;
+                gallery.appendChild(img);
+            });
+        }
+
+        function init() {
+            gapi.load('client:auth2', function() {
+                gapi.client.init({
+                    apiKey: API_KEY,
+                    clientId: CLIENT_ID,
+                    discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
+                    scope: 'https://www.googleapis.com/auth/drive.readonly',
+                }).then(function () {
+                    loadCategory('sports'); // Load default category
+                });
+            });
+        }
+
+        init();
+    </script>
     <footer>
         <p>&copy; 2024 WAKE. All rights reserved</p>
     </footer>
