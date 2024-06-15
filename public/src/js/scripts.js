@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.querySelector('video').addEventListener('loadeddata', hideLoadingIndicator);
 });
-/*
+
 function loadCategory(category) {
     document.getElementById('gallery').innerHTML = 'Loading...';
     
@@ -114,4 +114,3 @@ function displayImages(files) {
         gallery.appendChild(img);
     });
 }
-*/
