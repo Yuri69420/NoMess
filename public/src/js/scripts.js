@@ -88,17 +88,20 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function loadCategory(category) {
-    document.getElementById('gallery').innerHTML = 'Loading...';
-    
+    const gallery = document.getElementById('gallery');
+    gallery.innerHTML = 'Loading...';
+
+    const folderId = categories[category];
+
     gapi.client.drive.files.list({
-        q: `'YOUR_FOLDER_ID' in parents and name contains '${category}' and mimeType contains 'image/'`,
+        q: `'${folderId}' in parents and mimeType contains 'image/'`,
         fields: 'files(id, name, webContentLink, webViewLink)'
     }).then(function(response) {
         const files = response.result.files;
         if (files && files.length > 0) {
             displayImages(files);
         } else {
-            document.getElementById('gallery').innerHTML = 'No images found.';
+            gallery.innerHTML = 'No images found.';
         }
     });
 }
@@ -114,3 +117,19 @@ function displayImages(files) {
         gallery.appendChild(img);
     });
 }
+
+function init() {
+    gapi.load('client:auth2', function() {
+        gapi.client.init({
+            apiKey: API_KEY,
+            clientId: CLIENT_ID,
+            discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
+            scope: 'https://www.googleapis.com/auth/drive.readonly',
+        }).then(function () {
+            loadCategory('sports', document.querySelector('.gallery-categories button')); // Load default category
+        });
+    });
+}
+
+init();
+

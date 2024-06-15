@@ -43,7 +43,6 @@
             <button onclick="loadCategory('sports', this)">Sports</button>
             <button onclick="loadCategory('party', this)">Party</button>
             <button onclick="loadCategory('welcoming', this)">Welcoming Ceremony</button>
-            
         </div>
         <div id="gallery" class="gallery"></div>
     </section>
@@ -58,7 +57,6 @@
             sports: '1tuHQdOUxko6jH3h5Blv5ibqZqwE0vvEI', // Replace with actual folder IDs
             party: '1mEFyBfGYAmNBt8uPn72AjfqM-joRK9kH',
             welcoming: '13P6mCfFtKnih4KyU4GQH8S8PYvpDPybw',
-          
         };
 
         function loadCategory(category, button) {
@@ -102,7 +100,7 @@
                     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
                     scope: 'https://www.googleapis.com/auth/drive.readonly',
                 }).then(function () {
-                    loadCategory('all', document.querySelector('.gallery-categories button')); // Load default category
+                    loadCategory('sports', document.querySelector('.gallery-categories button')); // Load default category
                 });
             });
         }
