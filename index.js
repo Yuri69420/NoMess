@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const nodemailer = require('nodemailer');
+const { URL } = require('url');
 
 const app = express();
 
@@ -45,14 +46,15 @@ const registrationSchema = new mongoose.Schema({
 
 const Registration = mongoose.model('Registration', registrationSchema);
 
-// Configure Nodemailer with CloudMailing SMTP
+// Parse the CLOUDMAILIN_SMTP_URL
+const smtpUrl = new URL(process.env.CLOUDMAILIN_SMTP_URL);
 const transporter = nodemailer.createTransport({
-    host: process.env.CLOUDMAILIN_SMTP_URL.split(':')[1].substring(2),
-    port: 587,
-    secure: false, // true for 465, false for other ports
+    host: smtpUrl.hostname,
+    port: smtpUrl.port,
+    secure: smtpUrl.searchParams.get('starttls') === 'true', // true for 465, false for other ports
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        user: smtpUrl.username,
+        pass: smtpUrl.password
     }
 });
 
