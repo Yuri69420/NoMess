@@ -50,11 +50,14 @@ const Registration = mongoose.model('Registration', registrationSchema);
 const smtpUrl = new URL(process.env.CLOUDMAILIN_SMTP_URL);
 const transporter = nodemailer.createTransport({
     host: smtpUrl.hostname,
-    port: smtpUrl.port,
-    secure: smtpUrl.searchParams.get('starttls') === 'true', // true for 465, false for other ports
+    port: parseInt(smtpUrl.port, 10),
+    secure: false, // Use false for STARTTLS
     auth: {
         user: smtpUrl.username,
         pass: smtpUrl.password
+    },
+    tls: {
+        rejectUnauthorized: false
     }
 });
 
