@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const nodemailer = require('nodemailer');
 
 const app = express();
 
@@ -40,6 +41,17 @@ const registrationSchema = new mongoose.Schema({
 
 const Registration = mongoose.model('Registration', registrationSchema);
 
+// Configure Nodemailer with CloudMailing SMTP
+const transporter = nodemailer.createTransport({
+    host: process.env.CLOUDMAILIN_SMTP_URL.split(':')[1].substring(2),
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+});
+
 // Routes
 app.post('/register', (req, res) => {
     console.log('Received registration data:', req.body);
@@ -51,6 +63,22 @@ app.post('/register', (req, res) => {
             return res.status(500).json({ message: 'Registration failed', error: err });
         }
         console.log('Registration successful:', registration);
+
+        // Send registration confirmation email
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: registration.email,
+            subject: 'Registration Successful',
+            text: `Dear ${registration.name},\n\nThank you for registering for WAKE. We look forward to seeing you at the event.\n\nBest regards,\nWAKE Team`
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error('Error sending email:', error);
+            } else {
+                console.log('Email sent:', info.response);
+            }
+        });
 
         // Redirect to thankyou.html on success
         res.redirect('/thankyou.html');
