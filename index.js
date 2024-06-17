@@ -19,9 +19,13 @@ app.get('/thankyou.html', (req, res) => {
 
 // Connect to MongoDB using the environment variable
 const mongoURI = process.env.MONGODB_URI || 'your-default-mongodb-uri-here';
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }).catch(err => {
-    console.error('Initial MongoDB connection error:', err);
-});
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch(err => {
+        console.error('Initial MongoDB connection error:', err);
+    });
 
 const db = mongoose.connection;
 db.on('error', (err) => {
